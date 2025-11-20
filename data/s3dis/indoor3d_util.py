@@ -4,6 +4,8 @@ from os import path as osp
 import numpy as np
 import pandas as pd
 
+# 把 S3DIS 一个房间（room）的所有实例 txt 文件读出来 → 合并成一个房间级别的点云 → 保存为 point.npy / sem_label.npy / ins_label.npy。
+
 # -----------------------------------------------------------------------------
 # CONSTANTS
 # -----------------------------------------------------------------------------
