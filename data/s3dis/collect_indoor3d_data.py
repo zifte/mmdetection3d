@@ -19,12 +19,19 @@ parser.add_argument(
     help='The path of the file that stores the annotation names.')
 args = parser.parse_args()
 
+# Area_1/conferenceRoom_1/Annotations
+# ...
 anno_paths = [line.rstrip() for line in open(args.ann_file)]
+
+# Stanford3dDataset_v1.2_Aligned_Version/Area_1/conferenceRoom_1/Annotations
+# ...
 anno_paths = [osp.join(args.data_dir, p) for p in anno_paths]
 
+# ./s3dis_data
 output_folder = args.output_folder
 mmengine.mkdir_or_exist(output_folder)
 
+# 这个文件在原始 S3DIS 数据中有字符错误，无法解析，所以这里进行修正。
 # Note: there is an extra character in the v1.2 data in Area_5/hallway_6.
 # It's fixed manually here.
 # Refer to https://github.com/AnTao97/dgcnn.pytorch/blob/843abe82dd731eb51a4b3f70632c2ed3c60560e9/prepare_data/collect_indoor3d_data.py#L18  # noqa
@@ -42,7 +49,7 @@ for anno_path in anno_paths:
     elements = anno_path.split('/')
     out_filename = \
         elements[-3] + '_' + elements[-2]  # Area_1_hallway_1
-    out_filename = osp.join(output_folder, out_filename)
+    out_filename = osp.join(output_folder, out_filename) # './s3dis_data'文件下的Area_1_hallway_1 ...
     if osp.isfile(f'{out_filename}_point.npy'):
         print('File already exists. skipping.')
         continue
